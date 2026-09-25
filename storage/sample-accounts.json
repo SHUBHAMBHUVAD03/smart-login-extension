@@ -1,0 +1,23 @@
+{
+  "_comment": "REFERENCE ONLY. This illustrates the shape of an account. Real data is stored ENCRYPTED inside chrome.storage.local under the 'vault' key. Do not put real passwords in this file — add accounts through the extension popup instead.",
+  "accounts": [
+    {
+      "name": "Cognizant Project Account",
+      "website": "https://login.microsoftonline.com",
+      "username": "example@company.com",
+      "password": "<entered in the popup; stored encrypted>",
+      "usage": "Used for Cognizant project work.",
+      "category": "Work",
+      "favorite": true
+    },
+    {
+      "name": "Personal Email",
+      "website": "https://login.live.com",
+      "username": "me@outlook.com",
+      "password": "<entered in the popup; stored encrypted>",
+      "usage": "Personal Outlook mailbox.",
+      "category": "Personal",
+      "favorite": false
+    }
+  ]
+}

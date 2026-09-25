@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Account Login Manager</title>
+    <link rel="stylesheet" href="../styles/theme.css" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- ============================ LOCK SCREEN ========================= -->
+      <section id="lock-screen" class="screen">
+        <div class="lock-card">
+          <div class="brand">
+            <img src="../assets/icons/icon48.png" alt="" class="brand-logo" />
+            <div>
+              <h1 class="brand-title">Smart Login</h1>
+              <p class="brand-sub">Account Manager</p>
+            </div>
+          </div>
+
+          <!-- Setup (first run) -->
+          <form id="setup-form" class="lock-form hidden" autocomplete="off">
+            <p class="lock-hint">Create a master password to protect your vault. This is the only password you'll need to remember — it can't be recovered.</p>
+            <input type="password" id="setup-pass" class="input" placeholder="Master password" minlength="8" required />
+            <input type="password" id="setup-pass2" class="input" placeholder="Confirm master password" minlength="8" required />
+            <button type="submit" class="btn btn-primary btn-block">Create Vault</button>
+            <p class="error-text" id="setup-error"></p>
+          </form>
+
+          <!-- Unlock (returning) -->
+          <form id="unlock-form" class="lock-form hidden" autocomplete="off">
+            <p class="lock-hint">Enter your master password to unlock.</p>
+            <input type="password" id="unlock-pass" class="input" placeholder="Master password" required autofocus />
+            <button type="submit" class="btn btn-primary btn-block">Unlock</button>
+            <p class="error-text" id="unlock-error"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- ============================== DASHBOARD ========================= -->
+      <section id="dashboard" class="screen hidden">
+        <header class="topbar">
+          <div class="topbar-title">
+            <img src="../assets/icons/icon32.png" alt="" class="topbar-logo" />
+            <span>Smart Login</span>
+          </div>
+          <div class="topbar-actions">
+            <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+            <button id="add-btn" class="icon-btn" title="Add account" aria-label="Add account">＋</button>
+            <button id="lock-btn" class="icon-btn" title="Lock vault" aria-label="Lock vault">🔒</button>
+          </div>
+        </header>
+
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="search" id="search" class="input search-input" placeholder="Search accounts…" />
+          </div>
+          <div id="category-chips" class="chips"></div>
+        </div>
+
+        <main id="content" class="content">
+          <!-- Favorites -->
+          <div id="fav-section" class="section hidden">
+            <h2 class="section-title">⭐ Favorites</h2>
+            <div id="fav-list" class="card-grid"></div>
+          </div>
+
+          <!-- Recently used -->
+          <div id="recent-section" class="section hidden">
+            <h2 class="section-title">🕑 Recently Used</h2>
+            <div id="recent-list" class="card-grid"></div>
+          </div>
+
+          <!-- All accounts -->
+          <div id="all-section" class="section">
+            <h2 class="section-title">All Accounts <span id="all-count" class="count-badge">0</span></h2>
+            <div id="all-list" class="card-grid"></div>
+          </div>
+
+          <!-- Empty state -->
+          <div id="empty-state" class="empty-state hidden">
+            <div class="empty-emoji">🗂️</div>
+            <p>No accounts yet.</p>
+            <button id="empty-add-btn" class="btn btn-primary">Add your first account</button>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <!-- ============================== MODAL ============================== -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+      <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal-head">
+          <h2 id="modal-title">Add Account</h2>
+          <button id="modal-close" class="icon-btn" aria-label="Close">✕</button>
+        </div>
+        <form id="account-form" class="modal-body" autocomplete="off">
+          <input type="hidden" id="acc-id" />
+          <label class="field">
+            <span>Account Name</span>
+            <input type="text" id="acc-name" class="input" placeholder="e.g. Cognizant Project Account" required />
+          </label>
+          <label class="field">
+            <span>Website URL</span>
+            <input type="url" id="acc-website" class="input" placeholder="https://login.microsoftonline.com" required />
+          </label>
+          <label class="field">
+            <span>Username / Email</span>
+            <input type="text" id="acc-username" class="input" placeholder="example@company.com" required />
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <span class="pw-wrap">
+              <input type="password" id="acc-password" class="input" placeholder="Password" />
+              <button type="button" id="acc-pw-toggle" class="pw-toggle" aria-label="Show password">👁</button>
+            </span>
+            <small class="field-note" id="pw-edit-note"></small>
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span>Category</span>
+              <input type="text" id="acc-category" class="input" list="category-options" placeholder="Work" />
+              <datalist id="category-options"></datalist>
+            </label>
+            <label class="field field-check">
+              <input type="checkbox" id="acc-favorite" />
+              <span>Favorite ⭐</span>
+            </label>
+          </div>
+          <label class="field">
+            <span>Description / Usage</span>
+            <textarea id="acc-usage" class="input" rows="2" placeholder="Used for Cognizant project work."></textarea>
+          </label>
+
+          <div class="modal-foot">
+            <button type="button" id="delete-btn" class="btn btn-danger hidden">Delete</button>
+            <div class="modal-foot-right">
+              <button type="button" id="cancel-btn" class="btn btn-ghost">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

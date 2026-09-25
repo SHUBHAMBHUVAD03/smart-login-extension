@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Login — Settings</title>
+    <link rel="stylesheet" href="../styles/theme.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page-head">
+        <img src="../assets/icons/icon48.png" alt="" />
+        <div>
+          <h1>Smart Account Login Manager</h1>
+          <p>Settings &amp; security</p>
+        </div>
+      </header>
+
+      <!-- Locked notice -->
+      <section id="locked-card" class="card hidden">
+        <h2>Vault is locked</h2>
+        <p class="muted">Enter your master password to change settings.</p>
+        <form id="unlock-form" class="stack">
+          <input type="password" id="unlock-pass" class="input" placeholder="Master password" />
+          <button class="btn btn-primary">Unlock</button>
+          <p class="error-text" id="unlock-error"></p>
+        </form>
+      </section>
+
+      <div id="settings-area" class="hidden">
+        <!-- Appearance -->
+        <section class="card">
+          <h2>Appearance</h2>
+          <div class="row">
+            <span>Theme</span>
+            <select id="theme-select" class="input compact">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Security -->
+        <section class="card">
+          <h2>Security</h2>
+          <div class="row">
+            <span>Auto-lock after inactivity</span>
+            <select id="autolock-select" class="input compact">
+              <option value="1">1 minute</option>
+              <option value="5">5 minutes</option>
+              <option value="15">15 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="60">60 minutes</option>
+            </select>
+          </div>
+
+          <hr />
+
+          <h3>Change master password</h3>
+          <form id="change-pw-form" class="stack">
+            <input type="password" id="cur-pw" class="input" placeholder="Current master password" />
+            <input type="password" id="new-pw" class="input" placeholder="New master password (min 8)" />
+            <input type="password" id="new-pw2" class="input" placeholder="Confirm new master password" />
+            <button class="btn btn-primary">Update master password</button>
+            <p class="error-text" id="pw-error"></p>
+          </form>
+        </section>
+
+        <!-- Backup -->
+        <section class="card">
+          <h2>Backup &amp; Restore</h2>
+          <p class="muted">
+            Exports the <strong>encrypted</strong> vault. Secrets stay encrypted and can
+            only be opened with your master password.
+          </p>
+          <div class="btn-row">
+            <button id="export-btn" class="btn btn-ghost">Export vault</button>
+            <label class="btn btn-ghost file-label">
+              Import vault
+              <input type="file" id="import-file" accept="application/json" hidden />
+            </label>
+          </div>
+          <p class="error-text" id="backup-msg"></p>
+        </section>
+
+        <section class="card danger-card">
+          <h2>Danger zone</h2>
+          <p class="muted">Permanently deletes the vault and every stored account.</p>
+          <button id="wipe-btn" class="btn btn-danger">Erase everything</button>
+        </section>
+      </div>
+    </div>
+
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

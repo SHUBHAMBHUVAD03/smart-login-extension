@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Account Login Manager",
+  "version": "1.0.0",
+  "description": "Securely store accounts and log in with one click. Encrypted vault, master password, and smart auto-fill for Microsoft and modern login flows.",
+  "minimum_chrome_version": "102",
+  "action": {
+    "default_title": "Smart Account Login Manager",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage",
+    "scripting",
+    "tabs",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
